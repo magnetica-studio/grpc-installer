@@ -20,10 +20,16 @@ ls -la ./v1.42.0
 
 ### インストールした GRPC の利用方法
 
-GRPC を利用する C++ プロジェクトの CMakeLists.txt から、以下のように `cmake/grpc.cmake` をインクルードする。
+GRPC を利用する C++ プロジェクトの CMakeLists.txt から、以下のように `cmake/grpc.cmake` をインクルードします。
 
 ```cmake
 set(TARGET_GRPC_VERSION "v1.42.0")
 include("/path/to/develop/grpc-installer/cmake/grpc.cmake")
 ```
 
+これによって以下の変数が用意されます
+
+* `_PROTOBUF_LIBPROTOBUF`: ProtocolBuffer のインクルード／リンク設定を含むターゲットを表す変数
+* `_GRPC_GRPCPP`: GRPC の `gRPC::grpc++` ターゲットを表す変数
+* `_PROTOBUF_PROTOC`: protoc コマンドのパス（iOS 向けのビルド時も macOS 用にビルドした方のコマンドのパスになる。）
+* `_GRPC_CPP_PLUGIN_EXECUTABLE`: grpc_cpp_plugin コマンドのパス（iOS 向けのビルド時も macOS 用にビルドした方のコマンドのパスになる。）
