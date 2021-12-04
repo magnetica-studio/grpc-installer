@@ -35,20 +35,6 @@ set(Protobuf_USE_STATIC_LIBS ON)
 set(Protobuf_DIR ${GRPC_INSTALL_DIR}/lib/cmake/protobuf)
 find_package(Protobuf CONFIG REQUIRED NO_DEFAULT_PATH)
 
-add_library(_PROTOBUF_LIBPROTOBUF INTERFACE)
-
-target_include_directories(_PROTOBUF_LIBPROTOBUF
-  INTERFACE
-  ${Protobuf_INCLUDE_DIR}
-  )
-
-target_link_libraries(_PROTOBUF_LIBPROTOBUF
-  INTERFACE
-  ${Protobuf_LIBRARY}
-  ${Protobuf_LITE_LIBRARY}
-  ${Protobuf_PROTOC_LIBRARY}
-  )
-
 set(absl_DIR ${GRPC_INSTALL_DIR}/lib/cmake/absl)
 find_package(absl CONFIG REQUIRED NO_DEFAULT_PATH)
 
