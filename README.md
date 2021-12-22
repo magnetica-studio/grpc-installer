@@ -10,7 +10,8 @@ git clone git@github.com:magnetica-studio/grpc-installer.git
 cd grpc-installer
 
 # 目的のバージョン（タグ名）を指定して install.sh スクリプトファイルを実行します。
-./install.sh v1.42.0
+./install.sh v1.42.0  # Intel mac
+arch x86_64 ./install.sh v1.42.0  # M1 mac
 
 # 指定したバージョン名のディレクトリで macOS 用と iOS 用それぞれの GRPC がビルド／インストールされます。
 # `build-*` ディレクトリがビルドディレクトリ、 `install-*` ディレクトリがインストールディレクトリになります。
