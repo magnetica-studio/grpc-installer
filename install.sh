@@ -39,10 +39,11 @@ function build_grpc()
 {
   local PLATFORM=$1
   local TARGET_ARCH=$2
-  local DEPLOYMENT_TARGET=$3
-  local CMAKE_OPTIONS=$4
+  local INSTALL_SUFFIX=$3
+  local DEPLOYMENT_TARGET=$4
+  local CMAKE_OPTIONS=$5
 
-  local DIRNAME_SUFFIX="${PLATFORM}-${TARGET_ARCH}"
+  local DIRNAME_SUFFIX="${PLATFORM}-${INSTALL_SUFFIX}"
   BUILD_DIR=${SCRIPT_DIR}/${GRPC_VERSION}/build-${DIRNAME_SUFFIX}
   INSTALL_DIR=${SCRIPT_DIR}/${GRPC_VERSION}/install-${DIRNAME_SUFFIX}
 
@@ -52,6 +53,7 @@ function build_grpc()
     -B $BUILD_DIR \
     -G "Unix Makefiles" \
     -DgRPC_INSTALL=ON \
+    -DOPENSSL_NO_ASM=1 \
     -UgRPC_SSL_PROVIDER -DgRPC_SSL_PROVIDER=module \
     -DgRPC_BUILD_TESTS=OFF \
     -DCMAKE_BUILD_TYPE=Release \
@@ -74,10 +76,10 @@ function build_grpc()
 ##################################################################
 
 echo "Build macOS"
-build_grpc "macOS" "x86_64" 11.10 "-UgRPC_BUILD_CODEGEN -DgRPC_BUILD_CODEGEN=YES"
+build_grpc "macOS" "x86_64;arm64" "universal" 11.10 "-UgRPC_BUILD_CODEGEN -DgRPC_BUILD_CODEGEN=YES"
 
 echo "Build iOS arm64"
-build_grpc "iOS" "arm64" 11.10 \
+build_grpc "iOS" "arm64" "arm64" 11.10 \
   "-DCMAKE_SYSTEM_NAME=iOS -Uprotobuf_BUILD_PROTOC_BINARIES -Dprotobuf_BUILD_PROTOC_BINARIES=ON -UgRPC_BUILD_CODEGEN -DgRPC_BUILD_CODEGEN=OFF -DCARES_INSTALL=OFF -DCMAKE_XCODE_ATTRIBUTE_ENABLE_BITCODE=YES"
 
 # iOS ビルドだと、別のプロジェクトから find_package() で protobuf の情報を取得するときに、
