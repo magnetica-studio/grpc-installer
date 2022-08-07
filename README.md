@@ -10,13 +10,15 @@ git clone git@github.com:magnetica-studio/grpc-installer.git
 cd grpc-installer
 
 # 目的のバージョン（タグ名）を指定して install.sh スクリプトファイルを実行します。
-./install.sh v1.42.0  # Intel mac
-arch -x86_64 ./install.sh v1.42.0  # M1 mac
+./install.sh v1.48.0
 
 # 指定したバージョン名のディレクトリで macOS 用と iOS 用それぞれの GRPC がビルド／インストールされます。
 # `build-*` ディレクトリがビルドディレクトリ、 `install-*` ディレクトリがインストールディレクトリになります。
 # `build-*` ディレクトリは、ビルド／インストール完了後には使用しないので、削除しても問題ありません。
-ls -la ./v1.42.0
+
+# macOS 用には、 x86_64 と arm64 の universal binary としてライブラリがビルドされます。
+# iOS 用には、 arm64 のバイナリのみがビルドされます。
+ls -la ./v1.48.0
 ```
 
 ### インストールした GRPC の利用方法
@@ -24,7 +26,7 @@ ls -la ./v1.42.0
 GRPC を利用する C++ プロジェクトの CMakeLists.txt から、以下のように `cmake/grpc.cmake` をインクルードします。
 
 ```cmake
-set(TARGET_GRPC_VERSION "v1.42.0")
+set(TARGET_GRPC_VERSION "v1.48.0")
 include("/path/to/develop/grpc-installer/cmake/grpc.cmake")
 ```
 

@@ -12,7 +12,7 @@ else()
   set(PLATFORM_NAME "macOS")
 endif()
 
-# macOS 環境では grpc を universal binary としてビルドしているため、
+# macOS 向けには grpc を universal binary としてビルドしているため、
 # CMAKE_OSX_ARCHITECTURES によらず universal binary 用の
 # インストールディレクトリを使用する。
 if(${PLATFORM_NAME} STREQUAL "macOS")
