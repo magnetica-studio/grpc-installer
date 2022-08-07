@@ -12,10 +12,13 @@ else()
   set(PLATFORM_NAME "macOS")
 endif()
 
-if(CMAKE_OSX_ARCHITECTURES STREQUAL arm64)
-  set(ARCH_NAME arm64)
+# macOS 向けには grpc を universal binary としてビルドしているため、
+# CMAKE_OSX_ARCHITECTURES によらず universal binary 用の
+# インストールディレクトリを使用する。
+if(${PLATFORM_NAME} STREQUAL "macOS")
+  set(ARCH_NAME universal)
 else()
-  set(ARCH_NAME x86_64)
+  set(ARCH_NAME "${CMAKE_OSX_ARCHITECTURES}")
 endif()
 
 if(NOT DEFINED TARGET_GRPC_VERSION)
