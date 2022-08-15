@@ -76,10 +76,10 @@ function build_grpc()
 ##################################################################
 
 echo "Build macOS (universal binaries)"
-build_grpc "macOS" "x86_64;arm64" "universal" 11.10 "-UgRPC_BUILD_CODEGEN -DgRPC_BUILD_CODEGEN=YES"
+build_grpc "macOS" "x86_64;arm64" "universal" 10.11 "-UgRPC_BUILD_CODEGEN -DgRPC_BUILD_CODEGEN=YES"
 
 echo "Build iOS (arm64)"
-build_grpc "iOS" "arm64" "arm64" 11.10 \
+build_grpc "iOS" "arm64" "arm64" 13.0 \
   "-DCMAKE_SYSTEM_NAME=iOS -Uprotobuf_BUILD_PROTOC_BINARIES -Dprotobuf_BUILD_PROTOC_BINARIES=ON -UgRPC_BUILD_CODEGEN -DgRPC_BUILD_CODEGEN=OFF -DCARES_INSTALL=OFF -DCMAKE_XCODE_ATTRIBUTE_ENABLE_BITCODE=YES"
 
 # iOS ビルドだと、別のプロジェクトから find_package() で protobuf の情報を取得するときに、
