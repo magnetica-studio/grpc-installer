@@ -61,13 +61,7 @@ function select_cmake_generator() {
             echo "Unix Makefiles"
             ;;
         MINGW*|MSYS*|CYGWIN*)
-            if command -v ninja >/dev/null 2>&1; then
-                echo "Ninja"
-            elif command -v make >/dev/null 2>&1; then
-                echo "Unix Makefiles"
-            else
-                echo "NMake Makefiles"
-            fi
+            echo "Visual Studio 17 2022"
             ;;
         *)
             echo "Unix Makefiles"  # デフォルトのフォールバック
@@ -130,7 +124,7 @@ case "$(uname -s)" in
         ;;
     MINGW*|MSYS*|CYGWIN*)
         echo "Build Windows (x86_64)"
-        build_grpc "Windows" "x86_64" "x86_64" "" "-DgRPC_BUILD_CODEGEN=ON"
+        build_grpc "Windows" "x86_64" "x86_64" "" "-DgRPC_BUILD_CODEGEN=ON -DCMAKE_CXX_COMPILER=cl -DCMAKE_C_COMPILER=cl"
         ;;
     *)
         show_error "Unsupported operating system: $(uname -s)"

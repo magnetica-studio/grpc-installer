@@ -17,6 +17,7 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 else()
   message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME}")
 endif()
+message(STATUS "PLATFORM_NAME: ${PLATFORM_NAME}")
 
 # macOS 向けには grpc を universal binary としてビルドしているため、
 # CMAKE_OSX_ARCHITECTURES によらず universal binary 用の
@@ -40,7 +41,14 @@ message(STATUS "GRPC_INSTALL_DIR: ${GRPC_INSTALL_DIR}")
 
 set(protobuf_MODULE_COMPATIBLE ON CACHE BOOL "test" FORCE)
 set(Protobuf_USE_STATIC_LIBS ON)
-set(Protobuf_DIR ${GRPC_INSTALL_DIR}/lib/cmake/protobuf)
+
+if(${PLATFORM_NAME} STREQUAL "Windows")
+  set(Protobuf_DIR ${GRPC_INSTALL_DIR}/cmake)
+else()
+  set(Protobuf_DIR ${GRPC_INSTALL_DIR}/lib/cmake/protobuf)
+endif()
+message(STATUS "Protobuf_DIR: ${Protobuf_DIR}")
+
 find_package(Protobuf CONFIG REQUIRED NO_DEFAULT_PATH)
 
 set(absl_DIR ${GRPC_INSTALL_DIR}/lib/cmake/absl)
