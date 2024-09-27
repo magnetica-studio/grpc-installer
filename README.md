@@ -24,6 +24,7 @@ iOS 用には、 arm64 のバイナリのみがビルドされます。
 - [iOS v1.48.0](https://novonotes.s3.ap-northeast-1.amazonaws.com/libs/grpc-v1_48_0-install-iOS-arm64.zip)
 - [macOS v1.48.0](https://novonotes.s3.ap-northeast-1.amazonaws.com/libs/grpc-v1_48_0-install-macOS-universal.zip)
 - [Windows v1.48.0](https://ap-northeast-1.console.aws.amazon.com/s3/object/novonotes?region=ap-northeast-1&bucketType=general&prefix=libs/grpc-v1_48_0-install-Windows-x86_64.zip)
+- [Linux v1.48.0](https://novonotes.s3.ap-northeast-1.amazonaws.com/libs/grpc-v1_48_0-install-Linux-x86_64.zip)
 
 インストール手順:
 1. 上記リンクから、必要なファイルをダウンロード
