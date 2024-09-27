@@ -5,14 +5,21 @@ set -e -u
 # クロスプラットフォーム対応のパス解決関数
 resolve_path() {
     local path="$1"
-    if command -v realpath >/dev/null 2>&1; then
-        realpath "$path"
-    elif command -v readlink >/dev/null 2>&1; then
-        # macOS 用の readlink 対応
-        (cd "$(dirname "$path")" && pwd -P)/$(basename "$path")
+    if [[ -z "$path" ]]; then
+        echo "エラー: パスが指定されていません" >&2
+        return 1
+    fi
+    
+    # readlink -f が利用可能な場合（多くのLinux環境）
+    if readlink -f "$path" &>/dev/null; then
+        readlink -f "$path"
     else
-        # fallback: 簡易的な絶対パス化
-        echo "$(cd "$(dirname "$path")" && pwd)/$(basename "$path")"
+        # macOSなど、readlink -f が使えない環境用
+        local dir=$(cd -P -- "$(dirname -- "$path")" &>/dev/null && pwd -P)
+        if [[ -z "$dir" ]]; then
+            return 1
+        fi
+        echo "${dir%/}/${path##*/}"
     fi
 }
 
@@ -54,13 +61,7 @@ function select_cmake_generator() {
             echo "Unix Makefiles"
             ;;
         MINGW*|MSYS*|CYGWIN*)
-            if command -v ninja >/dev/null 2>&1; then
-                echo "Ninja"
-            elif command -v make >/dev/null 2>&1; then
-                echo "Unix Makefiles"
-            else
-                echo "NMake Makefiles"
-            fi
+            echo "Visual Studio 17 2022"
             ;;
         *)
             echo "Unix Makefiles"  # デフォルトのフォールバック
@@ -83,7 +84,7 @@ function build_grpc()
   mkdir -p $BUILD_DIR
   cmake \
       -B $BUILD_DIR \
-      -G $CMAKE_GENERATOR \
+      -G "$CMAKE_GENERATOR" \
       -DgRPC_INSTALL=ON \
       -DOPENSSL_NO_ASM=1 \
       -UgRPC_SSL_PROVIDER \
@@ -123,7 +124,7 @@ case "$(uname -s)" in
         ;;
     MINGW*|MSYS*|CYGWIN*)
         echo "Build Windows (x86_64)"
-        build_grpc "Windows" "x86_64" "x86_64" "" "-DgRPC_BUILD_CODEGEN=ON"
+        build_grpc "Windows" "x86_64" "x86_64" "" "-DgRPC_BUILD_CODEGEN=ON -DCMAKE_CXX_COMPILER=cl -DCMAKE_C_COMPILER=cl"
         ;;
     *)
         show_error "Unsupported operating system: $(uname -s)"
