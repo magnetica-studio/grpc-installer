@@ -63,6 +63,13 @@ message(STATUS "Found gRPC version: ${gRPC_VERSION}")
 
 set(_GRPC_GRPCPP gRPC::grpc++)
 set(_PROTOBUF_LIBPROTOBUF protobuf::libprotobuf)
-set(_PROTOBUF_PROTOC ${Protobuf_PROTOC_EXECUTABLE})
+
+if(${PLATFORM_NAME} STREQUAL "iOS")
+  # ios 開発は mac で行われるので、protoc は mac 用のビルドを用いる
+  set(_PROTOBUF_PROTOC "${GRPC_ROOT_DIR}/install-macOS-universal/bin/protoc")
+else()
+  set(_PROTOBUF_PROTOC ${Protobuf_PROTOC_EXECUTABLE})
+endif()
+
 set(_GRPC_CPP_PLUGIN_EXECUTABLE ${GRPC_INSTALL_DIR}/bin/grpc_cpp_plugin)
 
