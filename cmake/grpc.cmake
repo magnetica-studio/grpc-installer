@@ -42,16 +42,14 @@ message(STATUS "GRPC_INSTALL_DIR: ${GRPC_INSTALL_DIR}")
 set(protobuf_MODULE_COMPATIBLE ON CACHE BOOL "test" FORCE)
 set(Protobuf_USE_STATIC_LIBS ON)
 
-if(${PLATFORM_NAME} STREQUAL "Windows")
-  set(Protobuf_DIR ${GRPC_INSTALL_DIR}/cmake)
-else()
-  set(Protobuf_DIR ${GRPC_INSTALL_DIR}/lib/cmake/protobuf)
-endif()
+set(Protobuf_DIR ${GRPC_INSTALL_DIR}/lib/cmake/protobuf)
+set(utf8_range_DIR ${GRPC_INSTALL_DIR}/lib/cmake/utf8_range)
+set(absl_DIR ${GRPC_INSTALL_DIR}/lib/cmake/absl)
+
 message(STATUS "Protobuf_DIR: ${Protobuf_DIR}")
 
 find_package(Protobuf CONFIG REQUIRED NO_DEFAULT_PATH)
 
-set(absl_DIR ${GRPC_INSTALL_DIR}/lib/cmake/absl)
 find_package(absl CONFIG REQUIRED NO_DEFAULT_PATH)
 
 # Find gRPC installation

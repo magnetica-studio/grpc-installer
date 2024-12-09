@@ -2,3 +2,4 @@ build-*
 install-*
 grpc-source
 .DS_Store
+*.zip
