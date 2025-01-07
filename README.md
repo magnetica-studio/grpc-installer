@@ -1,8 +1,8 @@
 # gRPC Installer
 
-## このプロジェクトについて
+## このレポジトリについて
 
-このプロジェクトは、 GRPC をビルドしてインストールするプロジェクトです。
+このレポジトリは、 GRPC をビルドしてシステムにインストールするためのスクリプトや、CMake プロジェクトに統合するための設定ファイルを管理するレポジトリです。
 
 ビルドターゲットのプラットフォーム
 
@@ -18,7 +18,7 @@ iOS 用には、 arm64 のバイナリのみがビルドされます。
 
 ### Prebuilt binary をダウンロードする
 
-以下に必要なバイナリがあれば、それをダウンロードしてインストールするのが早い。
+以下に必要なバイナリがあれば、それをダウンロードしてインストールするのが早いです。
 
 - [iOS v1.68.2](https://novonotes.s3.ap-northeast-1.amazonaws.com/libs/grpc-v1_68_2-install-iOS-arm64.zip)
 - [macOS v1.68.2](https://novonotes.s3.ap-northeast-1.amazonaws.com/libs/grpc-v1_68_2-install-macOS-universal.zip)
